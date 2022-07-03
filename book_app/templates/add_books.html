@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Books</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+  <form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="追加">
+  </form>
+
+  <script>
+    $(document).ready(function(){
+        var $large_categories = $('#id_large_category');
+
+        $small_categories = $('#id_small_category');
+        $options = $small_categories.find('option');
+
+        $large_categories.on('change', function(){
+            $small_categories.html($options.filter('[largecategory-id="' + this.value + '"]'));
+        }).trigger('change');
+    });
+  </script>
+</body>
+</html>
