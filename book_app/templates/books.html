@@ -1,0 +1,76 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List Books</title>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+  <script src="https://unpkg.com/htmx.org@1.7.0" integrity="sha384-EzBXYPt0/T6gxNp0nuPtLkmRpmDBbjg6WmCUZRLXBBwYYmwAUxzlSGej0ARHX0Bo" crossorigin="anonymous"></script>
+  {% comment %} <script src="https://unpkg.com/htmx.org@1.6.0"></script> {% endcomment %}
+
+  {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script> {% endcomment %}
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  {% comment %} <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script> {% endcomment %}
+  {% comment %} <script src="{% static 'path/to/htmx.min.js' %}"></script> {% endcomment %}
+</head>
+<body>
+
+
+  <section id="book_list">
+    {% include 'list_books.html' %}
+  </section>
+
+
+
+
+  <script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
+{% comment %}     
+    let myDiv = document.getElementById('my-div');
+    htmx.process(myDiv);
+ {% endcomment %}
+
+
+
+{% comment %} 
+    document.body.addEventListener('htmx:beforeSwap', function(evt) {
+
+      var sortables = content.querySelectorAll(".sortable");
+      for (var i = 0; i < sortables.length; i++) {
+        var sortable = sortables[i];
+        new Sortable(sortable, {
+            animation: 150,
+            ghostClass: 'blue-background-class'
+        });
+      }
+
+    }); 
+{% endcomment %}
+
+    htmx.onLoad(function(content) {
+        var sortables = content.querySelectorAll(".sortable");
+        for (var i = 0; i < sortables.length; i++) {
+          var sortable = sortables[i];
+          new Sortable(sortable, {
+              animation: 150,
+              ghostClass: 'blue-background-class'
+          });
+        }
+    })
+
+  
+
+{% comment %} 
+    let myDiv = document.getElementById('my-div')
+    fetch("{% url 'book_app:sort' %}")
+      .then(response => response.text())
+      .then(data => { myDiv.innerHTML = data; htmx.process(myDiv); } ); {% endcomment %}
+
+  </script>
+</body>
+</html>

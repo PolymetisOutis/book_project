@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List Books</title>
+
+  <script src="https://unpkg.com/htmx.org@1.7.0" integrity="sha384-EzBXYPt0/T6gxNp0nuPtLkmRpmDBbjg6WmCUZRLXBBwYYmwAUxzlSGej0ARHX0Bo" crossorigin="anonymous"></script>
+  {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script> {% endcomment %}
+  {% comment %} <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script> {% endcomment %}
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script src="{% static 'path/to/htmx.min.js' %}"></script>
+</head>
+<body>
+  <form class="sortable" hx-post="{% url 'book_app:sort' %}" hx-trigger="end">
+    {% csrf_token %}
+  <div class="htmx-indicator">Updating...</div>
+  
+  {% for book in all_books %}
+  <div>
+      <input type='hidden' name='book_order' value='{{ book.pk }}'/>
+    <p>#{{ book.order }} / {{ book.category.large_category }}/{{ book.category }}/{{ book.title }}</p>
+  </div>
+  {% endfor %}
+
+  </form>
+
+
+
+  <script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
+
+
+    htmx.onLoad(function(content) {
+        var sortables = content.querySelectorAll(".sortable");
+        for (var i = 0; i < sortables.length; i++) {
+          var sortable = sortables[i];
+          new Sortable(sortable, {
+              animation: 150,
+              ghostClass: 'blue-background-class'
+          });
+        }
+    })
+
+  </script>
+</body>
+</html>

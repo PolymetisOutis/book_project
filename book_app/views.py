@@ -46,5 +46,26 @@ def sort(request):
     context = {
         'all_books': all_books,
     }
-    return render(request, 'list_books.html', context)
+    return render(request, 'books.html', context)
+    # return render(request, 'list_books.html', context)
     
+def list_books_test(request):
+    all_books = Books.objects.all().order_by('order')
+    context = {
+        'all_books': all_books,
+    }
+    return render(request, 'list_books_test.html', context)
+
+def list_books_original(request):
+    all_books = Books.objects.all().order_by('order')
+    context = {
+        'all_books': all_books,
+    }
+    return render(request, 'list_books_original.html', context)
+
+def books(request):
+    all_books = Books.objects.all().order_by('order')
+    context = {
+        'all_books': all_books,
+    }
+    return render(request, 'books.html', context)
