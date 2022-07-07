@@ -20,8 +20,11 @@
         $small_categories = $('#id_small_category');
         $options = $small_categories.find('option');
 
+        $small_categories.html('<option>---小カテゴリーを選択</option>');
+
         $large_categories.on('change', function(){
             $small_categories.html($options.filter('[largecategory-id="' + this.value + '"]'));
+            $small_categories.prepend('<option selected>---小カテゴリーを選択---</option>');
         }).trigger('change');
     });
   </script>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Books Siny</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+  <form class="" action="" method="post">
+      {% csrf_token %}
+      <div class="row">
+          <div class="col-lg-6">
+              <div class="mb-4">
+                  <label>大カテゴリーを選択</label>
+                  {{ form.large_categories}}
+              </div>
+          </div>
+          <div class="col-lg-6">
+              <div class="mb-4">
+                  <div class="form-group">
+                      <label>小カテゴリーを選択</label>
+                      <select id="id_small_categories" class="form-control" name="small_category">
+                          <option value="-----">---小カテゴリーを選択---</option>
+                      </select>
+                  </div>
+                  <div id="test"></div>
+              </div>
+          </div>
+      </div>
+  </form>
+
+<script src="https://code.jquery.com/jquery-3.5.0.js" integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc=" crossorigin="anonymous"></script>
+
+<script>
+    $("#id_large_categories").change(function () {
+        var large_category = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'book_app:get_small_categories' %}",
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'large_category': large_category
+            },
+            success: function (data) {
+                const obj_array = JSON.parse(data.small_categories)
+                console.log('JSON.parse(data.small_categories)/obj_array:');
+                console.log(obj_array);
+                console.log('obj_array[0]');
+                console.log(obj_array[0])
+                console.log('obj_array[0].fields');
+                console.log(obj_array[0].fields);
+                console.log('obj_array[0].pk');
+                console.log(obj_array[0].pk);
+                console.log('obj_array[0].fields.name');
+                console.log(obj_array[0].fields.name);
+
+                console.log(data);
+                console.log(data.small_categories);
+                console.log(data.small_categories[1]);
+                let html_data = '<option value="-----">---小カテゴリーを選択---</option>';
+                obj_array.forEach(function (data) {
+                    html_data += `<option value="${data.pk}">${data.fields.name}</option>`
+                });
+                $("#id_small_categories").html(html_data);
+                alert("done");
+                $("#test").text(data);
+            }
+        });
+    });
+{% comment %} 
+    $("#id_large_categories").change(function () {
+        var large_category = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'book_app:get_small_categories' %}",
+            data: {
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+                'large_category': large_category
+            },
+            success: function (data) {
+                console.log(data);
+                let html_data = '<option value="-----">---小カテゴリーを選択---</option>';
+                data.name.forEach(function (data) {
+                    html_data += `<option value="${data}">${data}</option>`
+                });
+                $("#id_small_categories").html(html_data);
+                alert("done");
+                $("#test").text(data);
+            }
+        });
+    });
+     {% endcomment %}
+</script>
+</body>
+</html>
