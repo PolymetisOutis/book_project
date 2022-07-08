@@ -25,7 +25,8 @@
     <script>
         const parentCategoryElement = $('#id_large_category');
         const categoryElement = $('#id_category');
-
+        
+        categoryElement.html('<option>---小カテゴリーを選択---</option>');
         const changeCategory = (select) => {
             // 子カテゴリの選択欄を空にする。
             categoryElement.children().remove();

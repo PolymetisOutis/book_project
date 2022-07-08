@@ -23,7 +23,8 @@ def ajax_get_category(request):
     pk = request.POST.get('pk')
     # pkパラメータがない、もしくはpk=空文字列だった場合は全カテゴリを返しておく。
     if not pk:
-        category_list = SmallCategory.objects.all()
+        # category_list = SmallCategory.objects.all()
+        category_list = []
 
     # pkがあれば、そのpkでカテゴリを絞り込む
     else:
