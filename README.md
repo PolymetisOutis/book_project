@@ -7,8 +7,6 @@
 
 尚、settings.pyのINSTALLED_APPSに、
 
-'widget_tweaks'
-
 'django_extensions'
 
 を記入しており、仮想環境の中などで、
