@@ -3,7 +3,7 @@ from django import forms
 from book_app.models import Books, LargeCategory, SmallCategory
 
 """
-武田さんの連動型プルダウンメニューのプラン
+https://github.com/Gilfeather さんの連動型プルダウンメニューのプラン
 """
 class LCSelect(forms.Select):
     def __init__(self, attrs=None, choices=()):
