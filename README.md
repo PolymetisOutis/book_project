@@ -21,7 +21,8 @@ python manage.py runserver
 
 # 連動型プルダウンメニューについて
 
-①https://github.com/Gilfeatherさんのプラン
+①https://github.com/Gilfeather
+さんのプラン
 
 ②Sinyさんのプラン
 
