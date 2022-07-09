@@ -5,16 +5,6 @@
 
 を参照し、ローカル環境で、URLを打って閲覧してください。
 
-尚、settings.pyのINSTALLED_APPSに、
-
-'django_extensions'
-
-を記入しており、仮想環境の中などで、
-
-pip install django-extensions
-
-を行い、
-
 python manage.py runserver
 
 をしてローカル環境でサーバーを立ち上げてください。
